@@ -1,0 +1,31 @@
+{
+  "name": "cluster-gl",
+  "version": "1.0.0",
+  "description": "A React Component to display graph relationships",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloud-clusterer/cluster-gl.git"
+  },
+  "author": "Chris Barbour <bobjamin@live.co.uk>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cloud-clusterer/cluster-gl/issues"
+  },
+  "homepage": "https://github.com/cloud-clusterer/cluster-gl#readme",
+  "dependencies": {
+    "@jetbrains/kotlin-extensions": "^1.0.1-pre.31",
+    "@jetbrains/kotlin-react": "^16.4.0-pre.31",
+    "@jetbrains/kotlin-react-dom": "^16.4.0-pre.31",
+    "kotlin": "^1.2.51",
+    "kotlinx-html": "^0.6.11",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  }
+}
