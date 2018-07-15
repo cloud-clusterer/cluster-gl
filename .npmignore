@@ -1,0 +1,10 @@
+src
+test
+lib
+bin/build/kotlin*
+bin/bundle
+bin/test
+*.iml
+.idea
+webpack.config.js
+*.tgz

@@ -2,12 +2,13 @@
   "name": "cluster-gl",
   "version": "1.0.0",
   "description": "A React Component to display graph relationships",
-  "main": "index.js",
+  "main": "bin/build/cluster-gl.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "shx rm -rf bin && webpack && shx rm -rf bin/build/kotlin-test*",
+    "test": "mocha bin/test"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,12 @@
     "kotlinx-html": "^0.6.11",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@jetbrains/kotlin-webpack-plugin": "^1.2.7",
+    "mocha": "^5.2.0",
+    "shx": "^0.3.2",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8"
   }
 }
