@@ -2,6 +2,7 @@ src
 test
 lib
 bin/build/kotlin*
+bin/build/simple*
 bin/bundle
 bin/test
 *.iml

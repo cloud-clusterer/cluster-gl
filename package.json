@@ -27,7 +27,8 @@
     "kotlin": "^1.2.51",
     "kotlinx-html": "^0.6.11",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "simple-gl": "^2.0.113"
   },
   "devDependencies": {
     "@jetbrains/kotlin-webpack-plugin": "^1.2.7",
