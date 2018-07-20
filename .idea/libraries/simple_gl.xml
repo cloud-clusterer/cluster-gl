@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="simple-gl" type="kotlin.js">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/node_modules/simple-gl" />
+      <root url="file://$PROJECT_DIR$/node_modules/@cloud-clusterer/simple-gl" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
