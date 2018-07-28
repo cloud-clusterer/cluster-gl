@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/cloud-clusterer/cluster-gl#readme",
   "dependencies": {
-    "@cloud-clusterer/simple-gl": "file:../simple-gl/cloud-clusterer-simple-gl-2.0.0.tgz",
+    "@cloud-clusterer/simple-gl": "file:../simple-gl",
     "@jetbrains/kotlin-extensions": "^1.0.1-pre.31",
     "@jetbrains/kotlin-react": "^16.4.0-pre.31",
     "@jetbrains/kotlin-react-dom": "^16.4.0-pre.31",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@jetbrains/kotlin-webpack-plugin": "^1.2.7",
+    "kotlin-test": "^1.2.51",
     "mocha": "^5.2.0",
     "shx": "^0.3.2",
     "webpack": "^4.16.0",

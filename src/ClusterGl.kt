@@ -10,17 +10,24 @@ class ClusterGlProps(
 ): RProps
 
 class ClusterGlState(
-        var scene: Scene
+        var cluster: RenderableCluser
 ): RState
 
 class ClusterGl(props: ClusterGlProps) : RComponent<ClusterGlProps, ClusterGlState>(props) {
 
     override fun componentWillMount() {
-        state.scene = Scene(listOf(Polygon(6, 0.2f)))
+        state.cluster = RenderableCluser(
+                (0 .. 100).map{ RenderableNode(Node(
+                        name = "Brian",
+                        text = "Hello",
+                        fill = Fill(Color(it/100f, 0f, 0f, 1f)),
+                        stroke = Stroke(1, Color(it/100f,0f, 0f, 1f))
+                )) }
+        , emptyList())
     }
 
     fun update(){
-        state.scene.objects[0].transformation = state.scene.objects[0].transformation.translate(Vector3(0f, 0f, 1f))
+
     }
 
 
@@ -30,9 +37,8 @@ class ClusterGl(props: ClusterGlProps) : RComponent<ClusterGlProps, ClusterGlSta
                 render = {
                     program, delta ->
                     program.updateProjection(aspectProjection(60f, 1000f, 500f))
-                    println(delta)
                     program.stage()
-                    state.scene.render(program)
+                    state.cluster.render(program)
                     update()
                 },
                 program = { projectedProgramFrom(it) }
