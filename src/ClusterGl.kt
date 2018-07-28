@@ -16,16 +16,15 @@ class ClusterGlState(
 class ClusterGl(props: ClusterGlProps) : RComponent<ClusterGlProps, ClusterGlState>(props) {
 
     override fun componentWillMount() {
-        state.scene = Scene(listOf(Polygon(6, 0.2f)))
+        state.scene = Scene(listOf(BorderedPolygon(6, 0.5f, 0.3f, color= Color(0.8f,0f,0f,1f))))
     }
 
     fun update(){
-        state.scene.objects[0].transformation = state.scene.objects[0].transformation.translate(Vector3(0f, 0f, 1f))
+        state.scene.objects[0].transformation = state.scene.objects[0].transformation.translate(Vector3(0f, 0f, -1f))
     }
 
 
     fun can(): WebGlCanvasProps {
-        val canvas: Element? = findDOMNode(this)
         return WebGlCanvasProps(
                 render = {
                     program, delta ->
