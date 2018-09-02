@@ -3,7 +3,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-data class BorderedPolygon(
+open class BorderedPolygon(
         val sides: Int,
         val outerRadius: Float,
         val innerRadius: Float,
@@ -25,7 +25,7 @@ data class BorderedPolygon(
             val angle = -(2.0 * PI / sides).toFloat()
             val outerStart = startDirection * outerRadius
             val innerStart = startDirection * innerRadius
-            return (0 .. sides).fold(emptyList<Triple<Vector3,Vector3,Vector3>>()){
+            return (0 until sides).fold(emptyList<Triple<Vector3,Vector3,Vector3>>()){
                 triangles, side ->
                     val nextSide = if(side == sides-1) 0 else side + 1
                     val currentOuter = outerStart.rotate(angle*side)

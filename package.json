@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "build": "shx rm -rf bin && webpack && shx rm -rf bin/build/kotlin-test*",
-    "test": "mocha bin/test"
+    "build": "webpack && shx rm -rf bin/build/kotlin-test*",
+    "test": "mocha bin/bundle"
   },
   "repository": {
     "type": "git",

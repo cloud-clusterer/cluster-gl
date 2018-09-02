@@ -4,7 +4,7 @@ module.exports = {
   entry: 'cluster-gl',
 
   resolve: {
-    modules: ['bin/build', 'node_modules'],
+    modules: ['bin/test', 'node_modules'],
   },
 
   output: {

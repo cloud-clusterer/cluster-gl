@@ -2,11 +2,9 @@
 import kotlinx.html.js.onMouseDownFunction
 import kotlinx.html.js.onMouseMoveFunction
 import kotlinx.html.js.onMouseUpFunction
-import org.khronos.webgl.WebGLProgram
 import org.khronos.webgl.WebGLRenderingContext
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.events.Event
-import org.w3c.dom.events.MouseEvent
 import react.*
 import react.dom.*
 import kotlin.browser.window
@@ -28,6 +26,9 @@ class WebGlCanvasState(
 
 class WebGlCanvas(props: WebGlCanvasProps) : RComponent<WebGlCanvasProps, WebGlCanvasState>(props) {
 
+    private var previousTime = 0.0
+    private var totalTime = 0.0
+
     fun onMouseUp(event: Event) = props.onMouseUp(event)
     fun onMouseDown(event: Event) = props.onMouseDown(event)
     fun onMouseMove(event: Event) =  props.onMouseMove(event)
@@ -41,7 +42,7 @@ class WebGlCanvas(props: WebGlCanvasProps) : RComponent<WebGlCanvasProps, WebGlC
 
     fun renderLoop(delta: Double){
         props.render(state.program, delta)
-        window.requestAnimationFrame{ renderLoop(it) }
+        window.requestAnimationFrame{ totalTime += it; renderLoop(it - previousTime); previousTime = it }
     }
 
     override fun RBuilder.render() {
