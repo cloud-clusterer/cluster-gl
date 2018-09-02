@@ -1,6 +1,6 @@
 import kotlin.js.Math
 
-class RenderableLink(val nodeA: RenderableNode, val nodeB: RenderableNode){
+class RenderableLink(val nodeA: RenderableNode, val nodeB: RenderableNode, val length: Float = 1.5f){
     private fun behind(v: Vector3) = v.copy(z = v.z + 0.001f)
     fun line() = Line(
             Vertex3d(behind(nodeA.center()), Color(0f,0f,0f,1f)),
@@ -10,15 +10,50 @@ class RenderableLink(val nodeA: RenderableNode, val nodeB: RenderableNode){
 
 class RenderableCluser(
         val nodes: List<RenderableNode>,
-        var links: List<RenderableLink>
+        var links: List<RenderableLink>,
+        val electrostaticForce: Float = 0.5f,
+        val springForce: Float = 0.01f
 ){
+
+    val grid: Grid<RenderableNode> = Grid(10f)
+
     init {
         links =(0..100).map{
             RenderableLink(nodes[(Math.random() * nodes.count()).toInt()], nodes[(Math.random() * nodes.count()).toInt()])
         }
     }
 
+    fun applyElectrostaticForce(){
+        nodes.forEach { node ->
+            node.velocity += nodes.fold(Vector3(0f,0f,0f)){
+                totalForce, otherNode -> if(otherNode != node){
+                    val difference = node.position - otherNode.position
+                    val distance = difference.length()
+                    val direction = difference.direction()
+                    if(distance > 0.1f) totalForce + direction * (electrostaticForce * 0.0001f / distance) else totalForce
+                } else totalForce
+            }
+        }
+    }
+
+    fun applySpringForces(){
+        links.forEach {
+            val difference = it.nodeB.position - it.nodeA.position
+            val length = difference.length()
+            val directionTowardB = difference.direction()
+            val gap = length - it.length
+            val force = gap * springForce * 0.0001f
+            val directionalForce = directionTowardB * force
+            val reverseForce = directionalForce * -1f
+            it.nodeA.velocity += directionalForce
+            it.nodeB.velocity += reverseForce
+        }
+    }
+
     fun update(delta: Double){
+        nodes.forEach { grid.register(it, it.center()) }
+        applyElectrostaticForce()
+        applySpringForces()
         nodes.forEach { it.update(delta) }
     }
 

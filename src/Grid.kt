@@ -2,6 +2,7 @@ class Grid<T>(val size: Float){
     private val cells: MutableMap<CellLocation, MutableList<T>> = mutableMapOf()
     private val locations: MutableMap<T, Pair<CellLocation, Int>> = mutableMapOf()
 
+    @JsName("register")
     fun register(node: T, location: Vector3){
         val x = (location.x / size).toInt()
         val y = (location.y / size).toInt()
@@ -19,11 +20,13 @@ class Grid<T>(val size: Float){
         }
     }
 
+    @JsName("nodesNear")
     fun nodesNear(node: T): List<T> = with(locations[node]) {
         if (this != null) cellsNear(this.first).flatMap{ cells[it] ?: mutableListOf() }
         else emptyList()
     }
 
+    @JsName("cellsNear")
     private fun cellsNear(location: CellLocation) =
        ((location.x - 1) .. (location.x + 1)).flatMap{ x ->
             ((location.y - 1) .. (location.y + 1)).map { y -> CellLocation(x, y) }
