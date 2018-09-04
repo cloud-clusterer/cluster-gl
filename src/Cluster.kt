@@ -1,18 +1,18 @@
 import kotlin.js.Math
 
-class RenderableLink(val nodeA: RenderableNode, val nodeB: RenderableNode, val length: Float = 1.5f){
-    private fun behind(v: Vector3) = v.copy(z = v.z + 0.001f)
+class RenderableLink(val nodeA: RenderableNode, val nodeB: RenderableNode, val length: Float = 1f){
+    private fun behind(v: Vector3) = v.copy(z = v.z + 1f)
     fun line() = Line(
-            Vertex3d(behind(nodeA.center()), Color(0f,0f,0f,1f)),
-            Vertex3d(behind(nodeB.center()),  Color(0f,0f,0f,1f))
+            Vertex3d(behind(nodeA.center()), Color(0f,0f,0f,0.4f)),
+            Vertex3d(behind(nodeB.center()),  Color(0f,0f,0f,0.4f))
     )
 }
 
 class RenderableCluser(
         val nodes: List<RenderableNode>,
         var links: List<RenderableLink>,
-        val electrostaticForce: Float = 0.5f,
-        val springForce: Float = 0.01f
+        val electrostaticForce: Float = 0.8f,
+        val springForce: Float = 0.05f
 ){
 
     val grid: Grid<RenderableNode> = Grid(10f)
@@ -47,6 +47,12 @@ class RenderableCluser(
             val reverseForce = directionalForce * -1f
             it.nodeA.velocity += directionalForce
             it.nodeB.velocity += reverseForce
+            // Dampen further if smaller than desired length
+            if(length<it.length){
+                val percentage = length / it.length
+                it.nodeA.velocity *= 1f - (percentage*0.01f)
+                it.nodeB.velocity *= 1f - (percentage*0.01f)
+            }
         }
     }
 

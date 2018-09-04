@@ -5,14 +5,15 @@ import kotlinx.html.js.onMouseUpFunction
 import org.khronos.webgl.WebGLRenderingContext
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.MouseEvent
 import react.*
 import react.dom.*
 import kotlin.browser.window
 
 class WebGlCanvasProps(
-        var onMouseUp: (event: Event) -> Unit = {},
-        var onMouseDown: (event: Event) -> Unit = {},
-        var onMouseMove: (event: Event) -> Unit = {},
+        var onMouseUp: (event: MouseEvent) -> Unit = {},
+        var onMouseDown: (event: MouseEvent) -> Unit = {},
+        var onMouseMove: (event: MouseEvent) -> Unit = {},
         var classes: String = "",
         var render: (program: Program, delta: Double) -> Unit,
         var program: (glContext: WebGLRenderingContext) -> Program = { simpleProgramFrom(it) },
@@ -29,9 +30,9 @@ class WebGlCanvas(props: WebGlCanvasProps) : RComponent<WebGlCanvasProps, WebGlC
     private var previousTime = 0.0
     private var totalTime = 0.0
 
-    fun onMouseUp(event: Event) = props.onMouseUp(event)
-    fun onMouseDown(event: Event) = props.onMouseDown(event)
-    fun onMouseMove(event: Event) =  props.onMouseMove(event)
+    fun onMouseUp(event: Event) = props.onMouseUp(event.asDynamic().nativeEvent as MouseEvent)
+    fun onMouseDown(event: Event) = props.onMouseDown(event.asDynamic().nativeEvent as MouseEvent)
+    fun onMouseMove(event: Event) =  props.onMouseMove(event.asDynamic().nativeEvent as MouseEvent)
 
     override fun componentDidMount() {
         state.program = props.program(glContext())
@@ -39,6 +40,18 @@ class WebGlCanvas(props: WebGlCanvasProps) : RComponent<WebGlCanvasProps, WebGlC
     }
     private fun glContext() = canvas().getContext("webgl") as? WebGLRenderingContext ?: throw IllegalArgumentException()
     private fun canvas() = findDOMNode(this) as HTMLCanvasElement
+
+//    fun updateView(){
+//        val canvas = canvas()
+//        canvas.width = props.width
+//        canvas.height = props.height
+//        this.state.program.updateProjection(
+//
+//        )
+//        this.aspectMatrix = Matrix3.scale(new Vector2D(this.props.scale, this.props.scale)).multiply(Matrix3.aspect(1.2, canvas.width, canvas.height))
+//        this.props.viewUpdated(this.programs, this.aspectMatrix, canvas.width, canvas.height)
+//        this.inverseView = this.aspectMatrix.inverse()
+//    }
 
     fun renderLoop(delta: Double){
         props.render(state.program, delta)
